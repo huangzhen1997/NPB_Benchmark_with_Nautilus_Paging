@@ -1266,6 +1266,11 @@ menu "Runtimes"
             help 
               Racket support (via Multiverse only - no special code)
 
+       config NPB_TESTS
+            bool "NPB TESTS"
+       default n
+
+
 endmenu
 
 source "src/dev/Kconfig"
