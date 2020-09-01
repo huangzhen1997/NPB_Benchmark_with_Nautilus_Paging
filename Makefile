@@ -594,7 +594,7 @@ endif
 #
 # Update libs, etc based on NAUT_CONFIG_TOOLCHAIN_ROOT 
 #
-#
+libs-y += libnpb.a
 ifneq ($(NAUT_CONFIG_CXX_SUPPORT)a,a)
 ifeq ($(NAUT_CONFIG_TOOLCHAIN_ROOT)a,""a)
 ifeq ($(CROSS_COMPILE)a, a)

@@ -676,9 +676,11 @@ int setjmp(int *x)
 {
     return 0;
 } */
+/*
 double fabs(double __x){
     return abs(__x);
 }
+*/
 double atan(double __x){
     return 45.000;
 }
@@ -730,18 +732,22 @@ if (x<0)
 else
 	return x;
 }
+/*
 double sin(double x)
 {
 return x;
 }
+*/
 double sinh(double x)
 {
 return x;
 }
+/*
 double cos(double x)
 {
 return x;
 }
+*/
 double cosh(double x)
 {
 return x;
@@ -782,10 +788,12 @@ double ceil(double x)
 {
 return x;
 }
+/*
 double floor(double x)
 {
 return x;
 }
+*/
 double difftime(time_t time1, time_t time2)
 {
     return 0;
