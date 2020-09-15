@@ -5,7 +5,7 @@ BENCHMARKU=EP
 include ../config/make.def
 
 OBJS = ep.o ${COMMON}/w_c_print_results.o ${COMMON}/${RAND}.o \
-       ${COMMON}/timers.o ${COMMON}/wtime.o ${COMMON}/e_log.o \
+       ${COMMON}/timers.o ${COMMON}/e_log.o \
        ${COMMON}/rdtsc.o ep_output_helper.o
 
 include ../sys/make.common
