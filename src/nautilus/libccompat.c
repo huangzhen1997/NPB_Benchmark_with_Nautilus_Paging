@@ -747,7 +747,6 @@ double cos(double x)
 {
 return x;
 }
-*/
 double cosh(double x)
 {
 return x;
@@ -780,10 +779,13 @@ double asin(double x)
 {
 return x;
 }
+*/
+/*
 double acos(double x)
 {
 return x;
 }
+*/
 double ceil(double x)
 {
 return x;
@@ -793,7 +795,6 @@ double floor(double x)
 {
 return x;
 }
-*/
 double difftime(time_t time1, time_t time2)
 {
     return 0;
@@ -818,6 +819,7 @@ double exp(double x)
 {
 return x;
 }
+*/
 
 /* became lazy... */
 GEN_DEF(writev)
