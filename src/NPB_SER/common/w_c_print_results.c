@@ -32,9 +32,9 @@ void w_c_print_results( char*   class,
     printf( " Mop/s total     =             %12.2f\n", *mops );
 
 
-    if( passed_verification < 0 )
+    if( *passed_verification < 0 )
         printf( " Verification    =            NOT PERFORMED\n" );
-    else if( passed_verification )
+    else if( *passed_verification )
         printf( " Verification    =               SUCCESSFUL\n" );
     else
         printf( " Verification    =             UNSUCCESSFUL\n" );

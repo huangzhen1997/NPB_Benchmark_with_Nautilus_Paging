@@ -47,7 +47,7 @@ c---------------------------------------------------------------------
 
 
 c---------------------------------------------------------------------
-      subroutine mg
+      subroutine npb_mg_entry()
 c---------------------------------------------------------------------
 
       implicit none
@@ -259,12 +259,12 @@ c            write(*,80) it
 c   80       format('  iter ',i3)
             call write_80(it)
          endif
-c         if (timeron) call timer_start(T_mg3P)
-c         call mg3P(u,v,r,a,c,n1,n2,n3,k)
-c         if (timeron) call timer_stop(T_mg3P)
-c         if (timeron) call timer_start(T_resid2)
-c         call resid(u,v,r,n1,n2,n3,a,k)
-c         if (timeron) call timer_stop(T_resid2)
+         if (timeron) call timer_start(T_mg3P)
+         call mg3P(u,v,r,a,c,n1,n2,n3,k)
+         if (timeron) call timer_stop(T_mg3P)
+         if (timeron) call timer_start(T_resid2)
+         call resid(u,v,r,n1,n2,n3,a,k)
+         if (timeron) call timer_stop(T_resid2)
       enddo
 
 
@@ -300,6 +300,7 @@ c 100  format(/' Benchmark completed ')
          endif
 
          err = abs( rnm2 - verify_value ) / verify_value
+c         call write_debug_1(rnm2, verify_value, err)
 c         err = abs( rnm2 - verify_value )
          if( err .le. epsilon ) then
             verified = .TRUE.
@@ -344,7 +345,8 @@ c     >                   nit, t,
 c     >                   mflops, '          floating point', 
 c     >                   verified, npbversion, compiletime,
 c     >                   cs1, cs2, cs3, cs4, cs5, cs6, cs7)
-      call w_c_print_results(class, nx(lt), ny(lt), nz(lt), nit, t, mflops, verified)
+      call w_c_print_results(class, nx(lt), ny(lt), nz(lt), nit, t, 
+     >  mflops, verified)
 
 
  600  format( i4, 2e19.12)
@@ -442,11 +444,15 @@ c---------------------------------------------------------------------
 
 
       if( debug_vec(1) .ge. 1 )then
-         write(*,*)' in setup, '
-         write(*,*)' k  lt  nx  ny  nz ',
-     >        ' n1  n2  n3 is1 is2 is3 ie1 ie2 ie3'
-         write(*,9) k,lt,ng(1,k),ng(2,k),ng(3,k),
-     >              n1,n2,n3,is1,is2,is3,ie1,ie2,ie3
+c         write(*,*)' in setup, '
+c         write(*,*)' k  lt  nx  ny  nz ',
+c     >        ' n1  n2  n3 is1 is2 is3 ie1 ie2 ie3'
+c         write(*,9) k,lt,ng(1,k),ng(2,k),ng(3,k),
+c     >              n1,n2,n3,is1,is2,is3,ie1,ie2,ie3
+         call write_001()
+         call write_002()
+         call write_9(k,lt,ng(1,k),ng(2,k),ng(3,k),
+     >                n1,n2,n3,is1,is2,is3,ie1,ie2,ie3)
  9       format(15i4)
       endif
 
@@ -565,6 +571,7 @@ c---------------------------------------------------------------------
      >                     + c(1) * ( r(i1-1,i2,i3) + r(i1+1,i2,i3)
      >                              + r1(i1) )
      >                     + c(2) * ( r2(i1) + r1(i1-1) + r1(i1+1) )
+c               call write_debug_4(u(i1,i2,i3))
 c---------------------------------------------------------------------
 c  Assume c(3) = 0    (Enable line below if c(3) not= 0)
 c---------------------------------------------------------------------
@@ -631,7 +638,7 @@ c---------------------------------------------------------------------
             enddo
             do i1=2,n1-1
                r(i1,i2,i3) = v(i1,i2,i3)
-     >                     - a(0) * u(i1,i2,i3)
+     >                     - a(0) * u(i1,i2,i3) 
 c---------------------------------------------------------------------
 c  Assume a(1) = 0      (Enable 2 lines below if a(1) not= 0)
 c---------------------------------------------------------------------
@@ -640,6 +647,7 @@ c    >                              + u1(i1) )
 c---------------------------------------------------------------------
      >                     - a(2) * ( u2(i1) + u1(i1-1) + u1(i1+1) )
      >                     - a(3) * ( u2(i1-1) + u2(i1+1) )
+c               call write_debug_4(u(i1,i2,i3)) 
             enddo
          enddo
       enddo
@@ -956,6 +964,7 @@ c---------------------------------------------------------------------
          do  i2=2,n2-1
             do  i1=2,n1-1
                s=s+r(i1,i2,i3)**2
+c               call write_debug_3(r(i1,i2,i3)**2)
                a=abs(r(i1,i2,i3))
                if(a.gt.rnmu)rnmu=a
             enddo
@@ -963,6 +972,7 @@ c---------------------------------------------------------------------
       enddo
 
       rnm2=sqrt( s / dn )
+c      call write_debug_2(s,dn,rnm2,n1,n2,n3)
       if (timeron) call timer_stop(T_norm2)
 
       return
@@ -991,8 +1001,9 @@ c---------------------------------------------------------------------
 
 
       call norm2u3(u,n1,n2,n3,rnm2,rnmu,nx(kk),ny(kk),nz(kk))
-      write(*,7)kk,title,rnm2,rnmu
- 7    format(' Level',i2,' in ',a8,': norms =',D21.14,D21.14)
+c      write(*,7)kk,title,rnm2,rnmu
+c 7    format(' Level',i2,' in ',a8,': norms =',D21.14,D21.14)
+      call write_7(kk, title, rnm2, rnmu);
 
       return
       end
@@ -1240,14 +1251,14 @@ c---------------------------------------------------------------------
       m2 = min(n2,14)
       m3 = min(n3,18)
 
-      write(*,*)'  '
+c      write(*,*)'  '
       do  i3=1,m3
          do  i1=1,m1
-            write(*,6)(z(i1,i2,i3),i2=1,m2)
+c            write(*,6)(z(i1,i2,i3),i2=1,m2)
          enddo
-         write(*,*)' - - - - - - - '
+c         write(*,*)' - - - - - - - '
       enddo
-      write(*,*)'  '
+c      write(*,*)'  '
  6    format(15f6.3)
 
       return 

@@ -5,7 +5,8 @@ BENCHMARKU=MG
 include ../config/make.def
 
 OBJS = mg.o ${COMMON}/w_c_print_results.o  \
-       ${COMMON}/${RAND}.o ${COMMON}/timers.o ${COMMON}/rtdsc.o
+       ${COMMON}/${RAND}.o ${COMMON}/timers.o ${COMMON}/rdtsc.o \
+       mg_opt_helper.o ${COMMON}/s_sin.o
 
 include ../sys/make.common
 
@@ -24,6 +25,9 @@ ${PROGRAM}: config ${OBJS}
 
 mg.o:		mg.f globals.h npbparams.h
 	${FCOMPILE} mg.f
+
+mg_opt_helper.o: mg_opt_helper.c
+	${CCOMPILE} $<
 
 clean:
 	- rm -f *.o *~ 
