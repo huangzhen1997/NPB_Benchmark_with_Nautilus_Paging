@@ -41,7 +41,7 @@
  * Accuracy:
  *	TRIG(x) returns trig(x) nearly rounded 
  */
-
+//#include <stdio.h>
 #include "fdlibm.h"
 
 static const double
@@ -132,9 +132,11 @@ double scalbn (double x, int n)
     if (k > 0)              /* normal result */
     {__HI(x) = (hx&0x800fffff)|(k<<20); return x;}
     if (k <= -54)
+    {
         if (n > 50000)  /* in case integer overflow in n+k */
             return huge*copysign(huge,x);   /*overflow*/
         else return tiny*copysign(tiny,x);  /*underflow*/
+    }
     k += 54;                /* subnormal result */
     __HI(x) = (hx&0x800fffff)|(k<<20);
     return x*twom54;
@@ -180,7 +182,10 @@ int __kernel_rem_pio2(double *x, double *y, int e0, int nx, int prec, const int 
 
     /* compute q[0],q[1],...q[jk] */
     for (i=0;i<=jk;i++) {
-        for(j=0,fw=0.0;j<=jx;j++) fw += x[j]*f[jx+i-j]; q[i] = fw;
+        for(j=0,fw=0.0;j<=jx;j++) {
+            fw += x[j]*f[jx+i-j];
+        }
+        q[i] = fw;
     }
 
     jz = jk;
@@ -410,7 +415,7 @@ double __ieee754_sqrt(double x)
     return z;
 }
 
-double sqrt(double x)
+double w_sqrt(double x)
 {
     return __ieee754_sqrt(x);
 }
@@ -680,14 +685,14 @@ double cos(double x)
     }
 }
 
-double w_sin(double x)
+double w_sin(double* x)
 {
-    return sin(x);
+    return sin(*x);
 }
 
-double w_cos(double x)
+double w_cos(double* x)
 {
-    return cos(x);
+    return cos(*x);
 }
 
 static const double
@@ -729,13 +734,13 @@ double __ieee754_acos(double x)
         z = (one+x)*0.5;
         p = z*(pS0+z*(pS1+z*(pS2+z*(pS3+z*(pS4+z*pS5)))));
         q = one+z*(qS1+z*(qS2+z*(qS3+z*qS4)));
-        s = sqrt(z);
+        s = w_sqrt(z);
         r = p/q;
         w = r*s-pio2_lo;
         return pi - 2.0*(s+w);
     } else {            /* x > 0.5 */
         z = (one-x)*0.5;
-        s = sqrt(z);
+        s = w_sqrt(z);
         df = s;
         __LO(df) = 0;
         c  = (z-df*df)/(s+df);
@@ -870,7 +875,7 @@ double __ieee754_pow(double x, double y)
         if(hy==0x40000000) return x*x; /* y is  2 */
         if(hy==0x3fe00000) {    /* y is  0.5 */
             if(hx>=0)   /* x >= +0 */
-                return sqrt(x); 
+                return w_sqrt(x); 
         }
     }
 
@@ -1024,13 +1029,160 @@ double pow(double x, double y)  /* wrapper pow */
     return  __ieee754_pow(x,y);
 }
 
+//#ifdef __STDC__
+static const double
+//#else
+//static double
+//#endif
+ln2_hi  =  6.93147180369123816490e-01,	/* 3fe62e42 fee00000 */
+        ln2_lo  =  1.90821492927058770002e-10,	/* 3dea39ef 35793c76 */
+        Lg1 = 6.666666666666735130e-01,  /* 3FE55555 55555593 */
+        Lg2 = 3.999999999940941908e-01,  /* 3FD99999 9997FA04 */
+        Lg3 = 2.857142874366239149e-01,  /* 3FD24924 94229359 */
+        Lg4 = 2.222219843214978396e-01,  /* 3FCC71C5 1D8E78AF */
+        Lg5 = 1.818357216161805012e-01,  /* 3FC74664 96CB03DE */
+        Lg6 = 1.531383769920937332e-01,  /* 3FC39A09 D078C69F */
+        Lg7 = 1.479819860511658591e-01;  /* 3FC2F112 DF3E5244 */
+
+
+//#ifdef __STDC__
+double __ieee754_log(double x)
+    //#else
+    //double __ieee754_log(x)
+    //double x;
+    //#endif
+{
+    double hfsq,f,s,z,R,w,t1,t2,dk;
+    int k,hx,i,j;
+    unsigned lx;
+
+    hx = __HI(x);		/* high word of x */
+    lx = __LO(x);		/* low  word of x */
+
+    k=0;
+    if (hx < 0x00100000) {			/* x < 2**-1022  */
+        if (((hx&0x7fffffff)|lx)==0) 
+            return -two54/zero;		/* log(+-0)=-inf */
+        if (hx<0) return (x-x)/zero;	/* log(-#) = NaN */
+        k -= 54; x *= two54; /* subnormal number, scale up x */
+        hx = __HI(x);		/* high word of x */
+    } 
+    if (hx >= 0x7ff00000) return x+x;
+    k += (hx>>20)-1023;
+    hx &= 0x000fffff;
+    i = (hx+0x95f64)&0x100000;
+    __HI(x) = hx|(i^0x3ff00000);	/* normalize x or x/2 */
+    k += (i>>20);
+    f = x-1.0;
+    if((0x000fffff&(2+hx))<3) {	/* |f| < 2**-20 */
+        if(f==zero) if(k==0) return zero;  else {dk=(double)k;
+            return dk*ln2_hi+dk*ln2_lo;}
+        R = f*f*(0.5-0.33333333333333333*f);
+        if(k==0) return f-R; else {dk=(double)k;
+            return dk*ln2_hi-((R-dk*ln2_lo)-f);}
+    }
+    s = f/(2.0+f); 
+    dk = (double)k;
+    z = s*s;
+    i = hx-0x6147a;
+    w = z*z;
+    j = 0x6b851-hx;
+    t1= w*(Lg2+w*(Lg4+w*Lg6)); 
+    t2= z*(Lg1+w*(Lg3+w*(Lg5+w*Lg7))); 
+    i |= j;
+    R = t2+t1;
+    if(i>0) {
+        hfsq=0.5*f*f;
+        if(k==0) return f-(hfsq-s*(hfsq+R)); else
+            return dk*ln2_hi-((hfsq-(s*(hfsq+R)+dk*ln2_lo))-f);
+    } else {
+        if(k==0) return f-s*(f-R); else
+            return dk*ln2_hi-((s*(f-R)-dk*ln2_lo)-f);
+    }
+}
+
+double w_log(double* x)
+{
+    return __ieee754_log(*x);
+}
+
+
+static const double
+halF[2] = {0.5,-0.5,},
+    twom1000= 9.33263618503218878990e-302,     /* 2**-1000=0x01700000,0*/
+    o_threshold=  7.09782712893383973096e+02,  /* 0x40862E42, 0xFEFA39EF */
+    u_threshold= -7.45133219101941108420e+02,  /* 0xc0874910, 0xD52D3051 */
+    ln2HI[2]   ={ 6.93147180369123816490e-01,  /* 0x3fe62e42, 0xfee00000 */
+        -6.93147180369123816490e-01,},/* 0xbfe62e42, 0xfee00000 */
+        ln2LO[2]   ={ 1.90821492927058770002e-10,  /* 0x3dea39ef, 0x35793c76 */
+            -1.90821492927058770002e-10,},/* 0xbdea39ef, 0x35793c76 */
+            invln2 =  1.44269504088896338700e+00; /* 0x3ff71547, 0x652b82fe */
+
+double __ieee754_exp(double x)  /* default IEEE double exp */
+{
+    double y,hi,lo,c,t;
+    int k,xsb;
+    unsigned hx;
+
+    hx  = __HI(x);  /* high word of x */
+    xsb = (hx>>31)&1;       /* sign bit of x */
+    hx &= 0x7fffffff;       /* high word of |x| */
+
+    /* filter out non-finite argument */
+    if(hx >= 0x40862E42) {          /* if |x|>=709.78... */
+        if(hx>=0x7ff00000) {
+            if(((hx&0xfffff)|__LO(x))!=0) 
+                return x+x;        /* NaN */
+            else return (xsb==0)? x:0.0;    /* exp(+-inf)={inf,0} */
+        }
+        if(x > o_threshold) return huge*huge; /* overflow */
+        if(x < u_threshold) return twom1000*twom1000; /* underflow */
+    }
+
+    /* argument reduction */
+    if(hx > 0x3fd62e42) {       /* if  |x| > 0.5 ln2 */ 
+        if(hx < 0x3FF0A2B2) {   /* and |x| < 1.5 ln2 */
+            hi = x-ln2HI[xsb]; lo=ln2LO[xsb]; k = 1-xsb-xsb;
+        } else {
+            k  = (int)(invln2*x+halF[xsb]);
+            t  = k;
+            hi = x - t*ln2HI[0];    /* t*ln2HI is exact here */
+            lo = t*ln2LO[0];
+        }
+        x  = hi - lo;
+    } 
+    else if(hx < 0x3e300000)  { /* when |x|<2**-28 */
+        if(huge+x>one) return one+x;/* trigger inexact */
+    }
+    else k = 0;
+
+    /* x is now in primary range */
+    t  = x*x;
+    c  = x - t*(P1+t*(P2+t*(P3+t*(P4+t*P5))));
+    if(k==0)    return one-((x*c)/(c-2.0)-x); 
+    else        y = one-((lo-(x*c)/(2.0-c))-hi);
+    if(k >= -1021) {
+        __HI(y) += (k<<20); /* add k to y's exponent */
+        return y;
+    } else {
+        __HI(y) += ((k+1000)<<20);/* add k to y's exponent */
+        return y*twom1000;
+    }
+}
+
+double exp(double x)        /* wrapper exp */
+{
+    return __ieee754_exp(x);
+}
+
+
 /*
    int main()
    {
-   double a = 3.14;
+   double a = 0.0;
    double b = 0.0;
    b = cos(a);
-   printf("%f\n", b);
+   printf("%20.13e\n", b);
    return 0;
    }
- */
+*/

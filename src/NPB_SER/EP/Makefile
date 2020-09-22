@@ -6,7 +6,7 @@ include ../config/make.def
 
 OBJS = ep.o ${COMMON}/w_c_print_results.o ${COMMON}/${RAND}.o \
        ${COMMON}/timers.o ${COMMON}/fdmlib.o \
-       ${COMMON}/rdtsc.o ep_opt_helper.o ${COMMON}/fdmlib.o
+       ${COMMON}/rdtsc.o ep_opt_helper.o ${COMMON}/fdlibm.o
 
 include ../sys/make.common
 
