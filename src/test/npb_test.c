@@ -24,13 +24,12 @@ void printvalue(double* a, double* b, double* c, double* d)
     printf("%16.14f  -----   %16.14f    ------- %16.14f   ---------   %16.14f\n", *a, *b, *c, *d);
 }
 
-extern void npb_ft_entry();
+extern void npb_entry();
 
 static int
 callffunc(int argc, char** argv)
 {
-    printf("calling ffunc\n");
-    npb_ft_entry();
+    npb_entry();
     return 0;
 }
 
