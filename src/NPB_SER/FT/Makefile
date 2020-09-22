@@ -9,7 +9,7 @@ include ../sys/make.common
 OBJS = appft.o auxfnct.o fft3d.o mainft.o verify.o \
        ${COMMON}/${RAND}.o ${COMMON}/w_c_print_results.o \
        ${COMMON}/timers.o ${COMMON}/rdtsc.o ft_opt_helper.o \
-       ${COMMON}/s_sin.o
+       ${COMMON}/fdlibm.o
 
 #${PROGRAM}: config ${OBJS}
 #	${FLINK} ${FLINKFLAGS} -o ${PROGRAM} ${OBJS} ${F_LIB}

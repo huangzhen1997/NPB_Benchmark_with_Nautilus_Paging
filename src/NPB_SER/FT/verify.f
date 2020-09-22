@@ -192,6 +192,8 @@ c            write (*,    120) 'not performed'
             do kt = 1, nt
               buf = (cksum(kt)-cexpd(kt))/cexpd(kt)
               err = sqrt(REALPART(buf)**2 + IMAGPART(buf)**2)
+              call write_debug_2(REALPART(buf)**2 + IMAGPART(buf)**2)
+              call write_debug_1(err,nt)
 c              err = abs((cksum(kt)-cexpd(kt))/cexpd(kt))
               if (.not.(err.le.epsilon)) then
                 verified = .false.

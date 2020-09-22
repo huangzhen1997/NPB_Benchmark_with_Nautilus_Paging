@@ -49,7 +49,7 @@ c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 c FT benchmark
 c---------------------------------------------------------------------
-      subroutine npb_ft_entry()
+      subroutine npb_entry()
          implicit none
          include 'global.h'
 
@@ -97,8 +97,8 @@ c         else
 c           mflops = 0.0
 c         endif
          mflops = 0.0
-         call w_c_print_results(class, nx, ny, nz, niter,
-     >      total_time, mflops, verified)
+         call w_c_print_results('FT',class, nx, ny, nz, niter,
+     >      total_time,verified)
 !
       end
       

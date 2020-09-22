@@ -56,6 +56,15 @@
          if (timers_enabled) call timer_stop(12)      
          if (timers_enabled) call timer_start(15)      
          call fftXYZ(1,xnt,y,exp1,exp2,exp3,nx,ny,nz)
+c         do i = 1, nz
+c             do k = 1, ny
+c                 do j = 1, nx
+c                     call write_debug_5(REALPART(y(j,k,i)),
+c     >                                  IMAGPART(y(j,k,i)))
+c                 enddo
+c             enddo
+c         enddo
+
          if (timers_enabled) call timer_stop(15)      
 
          do kt = 1, niter

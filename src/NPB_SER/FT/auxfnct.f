@@ -27,9 +27,9 @@ c---------------------------------------------------------------------
          do i = 0, ln - 1
             ti = i * t
             exponent(i+ku) = dcmplx(w_cos(ti),w_sin(ti))
-c            buf1 = cos(ti)
-c            buf2 = sin(ti)
-c            exponent(i+ku) = dcmplx(buf1, buf2)
+c            buf1 = w_cos(ti)
+c            buf2 = w_sin(ti)
+c            call write_debug_8(ti,buf1, buf2)
          enddo        
          ku = ku + ln
          ln = 2 * ln
@@ -113,6 +113,8 @@ c---------------------------------------------------------------------
           ji = mod (3 * i1, d2) + 1
           ki = mod (5 * i1, d3) + 1
           csum = csum + u(ii,ji,ki)
+c          call write_debug_3(ii,ji,ki,REALPART(u(ii,ji,ki)),
+c     >                                IMAGPART(u(ii,ji,ki)))
         end do
         csum = csum/dble(d1*d2*d3)
 c        write(*,30) iterN, csum
@@ -158,6 +160,8 @@ c---------------------------------------------------------------------
            call vranlc(2*d1, x0, a, tmp)
            do i = 1, d1 
              u0(i,j,k)=tmp(i)
+c             call write_debug_3(i,j,k,REALPART(tmp(i)),
+c     >                                IMAGPART(tmp(i)))
            end do
          end do
       end do
@@ -175,8 +179,13 @@ c---------------------------------------------------------------------
            do i = 1, nz
              do k = 1, ny
                do j = 1, nx
+c                   call write_debug_3(i,j,k,REALPART(y(j,k,i)),
+c     >                                      IMAGPART(y(j,k,i)))
+c                   call write_debug_4(twiddle(j,k,i))
                    y(j,k,i)=y(j,k,i)*twiddle(j,k,i)
                    x(j,k,i)=y(j,k,i)
+c                   call write_debug_3(i,j,k,REALPART(x(j,k,i)),
+c     >                                      IMAGPART(x(j,k,i)))
                  end do
               end do
            end do
