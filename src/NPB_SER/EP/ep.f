@@ -44,8 +44,7 @@ c         A. C. Woo
 c---------------------------------------------------------------------
 
 c---------------------------------------------------------------------
-c      program EMBAR
-       subroutine npb_ep_entry()
+      subroutine npb_entry
 c---------------------------------------------------------------------
 C
 c   This is the serial version of the APP Benchmark 1,
@@ -62,18 +61,16 @@ c   not affect the results.
       include 'npbparams.h'
 
       double precision Mops, epsilon, a, s, t1, t2, t3, t4, x, x1, 
-     >                 x2, q, sx, sy, an, tt, gc, dum(3)
+     >                 x2, q, sx, sy, tm, an, tt, gc, dum(3)
       double precision sx_verify_value, sy_verify_value, sx_err, sy_err
-      integer          mk, mm, nn, nk, nq, np, m_copy,
+      integer          mk, mm, nn, nk, nq, np, 
      >                 i, ik, kk, l, k, nit,
      >                 k_offset, j, fstatus
       logical          verified, timers_enabled
       external         randlc, timer_read
-      double precision randlc
-      integer*8        timer_read, tm
-      character*15     size
-      external         w_log, w_c_print_results
-      external         write_1000, write_1001 
+      double precision randlc, timer_read
+      double precision size
+      external         w_log
       double precision w_log
 
       parameter (mk = 16, mm = m - mk, nn = 2 ** mm,
@@ -89,10 +86,8 @@ c      if (fstatus .eq. 0) then
 c         timers_enabled = .true.
 c         close(2)
 c      else
-c         timers_enabled = .false.
+         timers_enabled = .false.
 c      endif
-      timers_enabled = .false.
-      m_copy = m + 1
 
 c   Because the size of the problem is too large to store in a 32-bit
 c   integer for some classes, we put it into a string (for printing).
@@ -100,8 +95,9 @@ c   Have to strip off the decimal point put in there by the floating
 c   point print statement (internal file)
 
 c      write(*, 1000)
-      call write_1000()
-      call write_1001(m)
+      call write_1000
+      size = 2.d0 ** (m+1)
+      call write_1001(size)
 c      write(size, '(f15.0)' ) 2.d0**(m+1)
 c      j = 15
 c      if (size(j:j) .eq. '.') j = j - 1
@@ -113,6 +109,7 @@ c      write (*,*)
  1001 format(' Number of random numbers generated: ', a15)
 
       verified = .false.
+
 c   Compute the number of "batches" of random number pairs generated 
 c   per processor. Adjust if the number of processors does not evenly 
 c   divide the total number
@@ -254,12 +251,13 @@ c        vectorizable.
       Mops = 2.d0**(m+1)/tm/1000000.d0
 
 c      write (6,11) tm, m, gc, sx, sy, (i, q(i), i = 0, nq - 1)
+      call write_11(tm, m, gc, sx, sy,nq,q)
  11   format ('EP Benchmark Results:'//'CPU Time =',f10.4/'N = 2^',
      >        i5/'No. Gaussian Pairs =',f15.0/'Sums = ',1p,2d25.15/
      >        'Counts:'/(i3,0p,f15.0))
 
-      call w_c_print_results(class, m_copy, 0, 0, nit,
-     >                   tm, Mops, 
+      call w_c_print_results('EP', class, m+1, 0, 0, nit,
+     >                   tm,
      >                   verified)
 
 

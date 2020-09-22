@@ -5,8 +5,8 @@ BENCHMARKU=EP
 include ../config/make.def
 
 OBJS = ep.o ${COMMON}/w_c_print_results.o ${COMMON}/${RAND}.o \
-       ${COMMON}/timers.o ${COMMON}/e_log.o \
-       ${COMMON}/rdtsc.o ep_output_helper.o
+       ${COMMON}/timers.o ${COMMON}/fdmlib.o \
+       ${COMMON}/rdtsc.o ep_opt_helper.o ${COMMON}/fdmlib.o
 
 include ../sys/make.common
 
@@ -31,8 +31,8 @@ ${PROGRAM}: config ${OBJS}
 ep.o:		ep.f npbparams.h
 	${FCOMPILE} ep.f
 
-ep_output_helper.o: ep_output_helper.c
-	${CCOMPILE} ep_output_helper.c
+ep_opt_helper.o: ep_opt_helper.c
+	${CCOMPILE} $<
 
 clean:
 	- rm -f *.o *~ 
