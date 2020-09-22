@@ -9,11 +9,19 @@ include ../sys/make.common
 OBJS = is.o \
        ${COMMON}/c_print_results.o \
        ${COMMON}/c_timers.o \
-       ${COMMON}/c_wtime.o
+       ${COMMON}/rdtsc.o
 
 
+#${PROGRAM}: config ${OBJS}
+#	${CLINK} ${CLINKFLAGS} -o ${PROGRAM} ${OBJS} ${C_LIB}
 ${PROGRAM}: config ${OBJS}
-	${CLINK} ${CLINKFLAGS} -o ${PROGRAM} ${OBJS} ${C_LIB}
+	rm -rf ./tmp ;\
+	mkdir tmp ;\
+	cp ${OBJS} ./tmp ;\
+	cd ./tmp ;\
+	ar rcs libnpb.a *.o ;\
+	mv libnpb.a ../../../../ ;\
+	cd .. 
 
 .c.o:
 	${CCOMPILE} $<

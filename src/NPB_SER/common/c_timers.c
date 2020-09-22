@@ -1,20 +1,20 @@
 /*  Prototype  */
-void wtime( double * );
+void rdtsc( unsigned long * );
 
 
 /*****************************************************************/
 /******         E  L  A  P  S  E  D  _  T  I  M  E          ******/
 /*****************************************************************/
-double elapsed_time( void )
+unsigned long elapsed_time( void )
 {
-    double t;
+    unsigned long t;
 
-    wtime( &t );
+    rdtsc( &t );
     return( t );
 }
 
 
-double start[64], elapsed[64];
+unsigned long start[64], elapsed[64];
 
 /*****************************************************************/
 /******            T  I  M  E  R  _  C  L  E  A  R          ******/
@@ -39,7 +39,7 @@ void timer_start( int n )
 /*****************************************************************/
 void timer_stop( int n )
 {
-    double t, now;
+    unsigned long t, now;
 
     now = elapsed_time();
     t = now - start[n];
@@ -51,7 +51,7 @@ void timer_stop( int n )
 /*****************************************************************/
 /******            T  I  M  E  R  _  R  E  A  D             ******/
 /*****************************************************************/
-double timer_read( int n )
+unsigned long timer_read( int n )
 {
     return( elapsed[n] );
 }

@@ -448,7 +448,7 @@ void rank( int iteration )
 
 /*  Determine where the partial verify test keys are, load into  */
 /*  top of array bucket_size                                     */
-    for( i=0; i<TEST_ARRAY_SIZE; i++) printf("%d\n", test_index_array[i]);
+//    for( i=0; i<TEST_ARRAY_SIZE; i++) printf("%d\n", test_index_array[i]);
     for( i=0; i<TEST_ARRAY_SIZE; i++ )
         partial_verify_vals[i] = key_array[test_index_array[i]];
 
@@ -512,7 +512,7 @@ void rank( int iteration )
 /* This is the partial verify test section */
 /* Observe that test_rank_array vals are   */
 /* shifted differently for different cases */
-    for( i=0; i<TEST_ARRAY_SIZE; i++) printf("%d\n", partial_verify_vals[i]);
+//    for( i=0; i<TEST_ARRAY_SIZE; i++) printf("%d\n", partial_verify_vals[i]);
     for( i=0; i<TEST_ARRAY_SIZE; i++ )
     {                                             
         k = partial_verify_vals[i];          /* test vals were put here */
@@ -524,7 +524,7 @@ void rank( int iteration )
             switch( CLASS )
             {
                 case 'S':
-                    printf("key_rank = %d\ntest_rank_array[%d]+%d=%d\n",key_rank,i,iteration,test_rank_array[i]+iteration);
+//                    printf("key_rank = %d\ntest_rank_array[%d]+%d=%d\n",key_rank,i,iteration,test_rank_array[i]+iteration);
                     if( i <= 2 )
                     {
                         if( key_rank != test_rank_array[i]+iteration )
@@ -645,12 +645,12 @@ void rank( int iteration )
 /*************             M  A  I  N             ****************/
 /*****************************************************************/
 
-int npb_entry( int argc, char **argv )
+int npb_is_entry( int argc, char **argv )
 {
 
     int             i, iteration, timer_on;
 
-    double          timecounter;
+    unsigned long   timecounter;
 
     FILE            *fp;
 
@@ -675,7 +675,6 @@ int npb_entry( int argc, char **argv )
         switch( CLASS )
         {
             case 'S':
-                printf("case S\n");
                 test_index_array[i] = S_test_index_array[i];
                 test_rank_array[i]  = S_test_rank_array[i];
                 break;
@@ -702,7 +701,7 @@ int npb_entry( int argc, char **argv )
         };
 
         
-    for( i=0; i<TEST_ARRAY_SIZE; i++) printf("%d\n", S_test_index_array[i]);
+//    for( i=0; i<TEST_ARRAY_SIZE; i++) printf("%d\n", S_test_index_array[i]);
 /*  Printout initial NPB info */
     printf
       ( "\n\n NAS Parallel Benchmarks (NPB3.3-SER) - IS Benchmark\n\n" );
@@ -777,13 +776,14 @@ int npb_entry( int argc, char **argv )
 
 
 /*  Print additional timers  */
+/*
     if (timer_on) {
-       double t_total, t_percent;
+       unsigned long t_total, t_percent;
 
        t_total = timer_read( 3 );
        printf("\nAdditional timers -\n");
        printf(" Total execution: %8.3f\n", t_total);
-       if (t_total == 0.0) t_total = 1.0;
+       if (t_total == 0) t_total = 1.0;
        timecounter = timer_read(1);
        t_percent = timecounter/t_total * 100.;
        printf(" Initialization : %8.3f (%5.2f%%)\n", timecounter, t_percent);
@@ -794,7 +794,7 @@ int npb_entry( int argc, char **argv )
        t_percent = timecounter/t_total * 100.;
        printf(" Sorting        : %8.3f (%5.2f%%)\n", timecounter, t_percent);
     }
-
+*/
 
     return 0;
          /**************************/

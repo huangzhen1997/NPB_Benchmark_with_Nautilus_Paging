@@ -9,7 +9,7 @@ void c_print_results( char   *name,
                       int    n2,
                       int    n3,
                       int    niter,
-                      double t,
+                      unsigned long t,
                       double mops,
 		      char   *optype,
                       int    passed_verification,
@@ -36,7 +36,7 @@ void c_print_results( char   *name,
 
     printf( " Iterations      =             %12d\n", niter );
  
-    printf( " Time in seconds =             %12.2f\n", t );
+    printf( " Time in cycles =             %lu\n", t );
 
     printf( " Mop/s total     =             %12.2f\n", mops );
 
