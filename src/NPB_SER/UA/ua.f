@@ -41,7 +41,7 @@ c Author: H. Feng
 c         R. Van der Wijngaart
 c---------------------------------------------------------------------
 
-      subroutine npb_ua_entry()
+      subroutine npb_entry
       include 'header.h'
 
       integer          step, ie,iside,i,j,k, fstatus
@@ -243,8 +243,8 @@ c.....compute millions of collocation points advanced per second.
 c.....diffusion: nmxh advancements, convection: 1 advancement
       mflops = nelt_tot*dble(lx1*lx1*lx1*(nmxh+1))/(tmax*1.d6)
 
-      call w_c_print_results(class, refine_max, 0, 0, niter, 
-     &     tmax, mflops, verified)
+      call w_c_print_results('UA',class, refine_max, 0, 0, niter, 
+     &     tmax, verified)
 
 c---------------------------------------------------------------------
 c      More timers

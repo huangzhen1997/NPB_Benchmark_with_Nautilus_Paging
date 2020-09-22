@@ -8,7 +8,7 @@ include ../config/make.def
 OBJS = ua.o convect.o diffuse.o adapt.o move.o mason.o \
        precond.o utils.o transfer.o verify.o  setup.o\
        ${COMMON}/w_c_print_results.o ${COMMON}/timers.o ${COMMON}/rdtsc.o \
-       ua_opt_helper.o ${COMMON}/s_sin.o ${COMMON}/e_log.o
+       ua_opt_helper.o ${COMMON}/fdlibm.o
 
 
 include ../sys/make.common

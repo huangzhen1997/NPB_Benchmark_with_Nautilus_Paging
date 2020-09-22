@@ -58,12 +58,12 @@ void write_verify_1995()
 
 void write_verify_2001()
 {
-    printf(" Comparison of temperature integrals");
+    printf(" Comparison of temperature integrals\n");
 }
 
 void write_verify_2005()
 {
-    printf(" Temperature integral");
+    printf(" Temperature integral\n");
 }
 
 void write_verify_2015(double* norm)
