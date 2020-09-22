@@ -56,8 +56,9 @@ ${COMMON}/w_c_print_results.o: ${COMMON}/w_c_print_results.c ../config/make.def
 ${COMMON}/rdtsc.o: ${COMMON}/rdtsc.c ../config/make.def
 	cd ${COMMON}; ${CCOMPILE} rdtsc.c
 
-${COMMON}/s_sin.o: ${COMMON}/s_sin.c ../config/make.def
-	cd ${COMMON}; ${CCOMPILE} s_sin.c
+${COMMON}/fdlibm.o: ${COMMON}/fdlibm.c ../config/make.def
+	cd ${COMMON}; ${CCOMPILE} fdlibm.c
+
 
 
 

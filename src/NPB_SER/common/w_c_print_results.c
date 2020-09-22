@@ -3,16 +3,22 @@
 /*****************************************************************/
 #include <nautilus/libccompat.h>
 
-void w_c_print_results( char*   class,
+void w_c_print_results( char* name,
+                      char*   class,
                       int*    n1, 
                       int*    n2,
                       int*    n3,
                       int*    niter,
                       unsigned long* t,
-                      double* mops,
                       int*    passed_verification
                       )
 {
+
+    char namebuf[3];
+    namebuf[2] = '\0';
+    namebuf[0] = name[0];
+    namebuf[1] = name[1];
+    printf( "\n\n %s Benchmark Completed\n", namebuf ); 
 
     printf( " Class           =                        %c\n", *class );
 
@@ -29,7 +35,6 @@ void w_c_print_results( char*   class,
  
     printf( " Time in cycles =             %lu\n", *t );
 
-    printf( " Mop/s total     =             %12.2f\n", *mops );
 
 
     if( *passed_verification < 0 )
