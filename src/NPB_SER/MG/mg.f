@@ -47,7 +47,7 @@ c---------------------------------------------------------------------
 
 
 c---------------------------------------------------------------------
-      subroutine npb_mg_entry()
+      subroutine npb_entry
 c---------------------------------------------------------------------
 
       implicit none
@@ -345,8 +345,8 @@ c     >                   nit, t,
 c     >                   mflops, '          floating point', 
 c     >                   verified, npbversion, compiletime,
 c     >                   cs1, cs2, cs3, cs4, cs5, cs6, cs7)
-      call w_c_print_results(class, nx(lt), ny(lt), nz(lt), nit, t, 
-     >  mflops, verified)
+      call w_c_print_results('MG',class, nx(lt), ny(lt), nz(lt), nit, 
+     >                        t, verified)
 
 
  600  format( i4, 2e19.12)

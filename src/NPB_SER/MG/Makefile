@@ -6,7 +6,7 @@ include ../config/make.def
 
 OBJS = mg.o ${COMMON}/w_c_print_results.o  \
        ${COMMON}/${RAND}.o ${COMMON}/timers.o ${COMMON}/rdtsc.o \
-       mg_opt_helper.o ${COMMON}/s_sin.o
+       mg_opt_helper.o ${COMMON}/fdlibm.o
 
 include ../sys/make.common
 
