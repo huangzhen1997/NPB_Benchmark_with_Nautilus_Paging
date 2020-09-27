@@ -269,7 +269,7 @@ c---------------------------------------------------------------------
 c    Compute the difference of solution values and the known reference values.
 c---------------------------------------------------------------------
         do m = 1, 5
-           call write_debug_1(xcr(m), xce(m))   
+c           call write_debug_1(xcr(m), xce(m))   
            xcrdif(m) = dabs((xcr(m)-xcrref(m))/xcrref(m)) 
            xcedif(m) = dabs((xce(m)-xceref(m))/xceref(m))
            
