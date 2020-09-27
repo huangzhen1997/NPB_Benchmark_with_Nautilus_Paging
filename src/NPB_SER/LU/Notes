@@ -1,0 +1,5 @@
+array rsdnm has NaN value before calling verify(), it's modified in func ssor
+in func ssor, rsdnm is modified by func l2norm
+in func l2norm, sum(rsdnm) relies on v(rsd in ssor)
+in func ssor, rsd relies on dt and func buts
+in func buts, if debug_003() is enabled, it seems v(rsd in ssor) has right values, but page fault error randomly emerges
