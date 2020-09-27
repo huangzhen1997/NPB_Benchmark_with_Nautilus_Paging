@@ -1,0 +1,1 @@
+When write_debug_002 is enabled in conj_grad(), the program passes verification.
