@@ -114,3 +114,18 @@ void write_debug_1(double* xcr, double* xce)
 {
     printf("debug: xcr = %20.13e xce = %20.13e\n", *xcr, *xce);
 }
+
+void write_debug_2(double* rms)
+{
+    printf("rms = %20.13e\n", *rms);
+}
+
+void write_debug_3(double* add)
+{
+    printf("add = %20.13e\n", *add);
+}
+
+void write_debug_4(double* u, double* ue)
+{
+    printf("%20.13e %20.13e\n", *u, *ue);
+}
