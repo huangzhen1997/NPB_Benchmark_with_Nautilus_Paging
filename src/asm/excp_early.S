@@ -74,6 +74,14 @@ END(early_irq_handlers)
 GLOBAL(early_irq_common)
 
     SAVE_GPRS()
+#ifdef NAUT_CONFIG_FPU_SAVE
+    /* Save the FPRs */
+    movq %gs:0x0, %rax
+    movzwq 16(%rax), %rbx
+    leaq (%rax, %rbx, 1), %rbx
+    fxsave (%rbx)
+#endif
+
 
 #ifdef NAUT_CONFIG_WATCHDOG
     // this call can nuke registers, but we don't
@@ -198,7 +206,14 @@ thr_return:
 skip_cat_exit:
 
 #endif
-
+#ifdef NAUT_CONFIG_FPU_SAVE
+    /* Restore the FPRs */
+    movq %gs:0x0, %rax
+    movzwq 16(%rax), %rbx
+    leaq (%rax, %rbx, 1), %rbx
+    fxrstor (%rbx)
+ 
+#endif
     RESTORE_GPRS()
 
     
@@ -223,6 +238,14 @@ errloop:
 GLOBAL(early_excp_common)
 
     SAVE_GPRS()
+#ifdef NAUT_CONFIG_FPU_SAVE
+    /* Save the FPRs */
+    movq %gs:0x0, %rax
+    movzwq 16(%rax), %rbx
+    leaq (%rax, %rbx, 1), %rbx
+    fxsave (%rbx)
+#endif
+
 
     // Exceptions may occur before gsbase is set, for example breakpoints
     // or bugs in early code - so we need to guard
@@ -271,7 +294,14 @@ skip_per_cpu_update1:
 	            // we may now be outside of interrupt context
 
 skip_per_cpu_update2:   
-    
+ #ifdef NAUT_CONFIG_FPU_SAVE
+    /* Restore the FPRs */
+    movq %gs:0x0, %rax
+    movzwq 16(%rax), %rbx
+    leaq (%rax, %rbx, 1), %rbx
+    fxrstor (%rbx)
+#endif
+   
     RESTORE_GPRS()
     /* pop error code and excp number */
     addq $16, %rsp
