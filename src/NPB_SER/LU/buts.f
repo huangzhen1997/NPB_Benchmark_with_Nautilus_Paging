@@ -49,7 +49,6 @@ c---------------------------------------------------------------------
       integer i, j, m
       double precision  tmp, tmp1
       double precision  tmat(5,5)
-      double precision  tmp2, tmp3, tmp4, tmp5, tmp6
 
 
 
@@ -241,13 +240,6 @@ c---------------------------------------------------------------------
             v( 3, i, j, k ) = v( 3, i, j, k ) - tv( 3, i, j )
             v( 4, i, j, k ) = v( 4, i, j, k ) - tv( 4, i, j )
             v( 5, i, j, k ) = v( 5, i, j, k ) - tv( 5, i, j )
-
-            tmp2 = v( 1, i, j, k )
-            tmp3 = v( 2, i, j, k )
-            tmp4 = v( 3, i, j, k )
-            tmp5 = v( 4, i, j, k )
-            tmp6 = v( 5, i, j, k )
-c            call write_debug_003(i,j,k,tmp2,tmp3,tmp4,tmp5,tmp6)
 
         enddo
       end do

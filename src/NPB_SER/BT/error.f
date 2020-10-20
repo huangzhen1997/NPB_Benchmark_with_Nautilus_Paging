@@ -32,7 +32,7 @@ c---------------------------------------------------------------------
                   add = u(m,i,j,k)-u_exact(m)
                   rms(m) = rms(m) + add*add
 c                  call write_debug_3(add)
-                  call write_debug_4(u(m,i,j,k), u_exact(m))
+c                  call write_debug_4(u(m,i,j,k), u_exact(m))
                enddo
             enddo
           enddo

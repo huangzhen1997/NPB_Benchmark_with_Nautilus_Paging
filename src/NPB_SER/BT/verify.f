@@ -317,7 +317,7 @@ c              write(*, 2015) m, xcr(m)
               call write_verify_2015(m, xcr(m))
            else if (xcrdif(m) .le. epsilon) then
 c              write (*,2011) m,xcr(m),xcrref(m),xcrdif(m)
-              call write_verify_2001(m,xcr(m),xcrref(m),xcrdif(m))
+              call write_verify_2011(m,xcr(m),xcrref(m),xcrdif(m))
            else 
               verified = .false.
 c              write (*,2010) m,xcr(m),xcrref(m),xcrdif(m)
@@ -341,7 +341,7 @@ c              write(*, 2015) m, xce(m)
               call write_verify_2015(m, xce(m))
            else if (xcedif(m) .le. epsilon) then
 c              write (*,2011) m,xce(m),xceref(m),xcedif(m)
-              call write_verify_2001(m,xce(m),xceref(m),xcedif(m))
+              call write_verify_2011(m,xce(m),xceref(m),xcedif(m))
            else
               verified = .false.
 c              write (*,2010) m,xce(m),xceref(m),xcedif(m)

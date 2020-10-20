@@ -12,7 +12,7 @@ void write_1001(int* na)
 
 void write_1002(int* niter)
 {
-    printf(" Iterations: %d\n", *niter);
+    printf(" Iterations: %d\n\n", *niter);
 }
 
 void write_2000(unsigned long* tm)

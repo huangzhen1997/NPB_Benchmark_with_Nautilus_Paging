@@ -39,6 +39,11 @@ void write_appft_83()
     printf("FT subroutine timers\n");
 }
 
+void write_auxfuct_30(int* iterN, double* rp, double* ip)
+{
+    printf(" T = %5d     Checksum = %20.13e %20.13e\n", *iterN, *rp, *ip);
+}
+
 void write_debug_1(double* err, int* nt)
 {
     printf("err = %20.13e   %d\n", *err, *nt);
