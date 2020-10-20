@@ -85,19 +85,16 @@ c---------------------------------------------------------------------
 
       double precision   zeta, randlc
       external           randlc
-      integer*8          timer_read, t, tmax
-      external           w_c_print_results, timer_read
       double precision   rnorm
       double precision   norm_temp1,norm_temp2
 
-      double precision   mflops
+      integer*8          t, mflops, tmax
       character          class
       logical            verified
       double precision   zeta_verify_value, epsilon, err
 
-      integer            fstatus
-      character          t_names(t_last)*8
-
+      integer   fstatus
+      character t_names(t_last)*8
 
       do i = 1, T_last
          call timer_clear( i )
@@ -111,7 +108,7 @@ c         t_names(t_bench) = 'benchmk'
 c         t_names(t_conj_grad) = 'conjgd'
 c         close(2)
 c      else
-c         timeron = .false.
+         timeron = .false.
 c      endif
 
       call timer_start( T_init )
@@ -172,6 +169,9 @@ c      write( *,1000 )
 c      write( *,1001 ) na
 c      write( *,1002 ) niter
 c      write( *,* )
+      call write_1000
+      call write_1001(na)
+      call write_1002(niter)
  1000 format(//,' NAS Parallel Benchmarks (NPB3.3-SER)',
      >          ' - CG Benchmark', /)
  1001 format(' Size: ', i11 )
@@ -290,6 +290,7 @@ c
       call timer_stop( T_init )
 
 c      write (*, 2000) timer_read(T_init)
+      call write_2000(timer_read(T_init))
  2000 format(' Initialization time = ',f15.3,' seconds')
 
       call timer_start( T_bench )
@@ -336,7 +337,9 @@ c---------------------------------------------------------------------
 
          zeta = shift + 1.0d0 / norm_temp1
 c         if( it .eq. 1 ) write( *,9000 )
+         if( it .eq. 1 ) call write_9000
 c         write( *,9001 ) it, rnorm, zeta
+         call write_9001(it, rnorm, zeta)
 
  9000    format( /,'   iteration           ||r||                 zeta' )
  9001    format( 4x, i5, 7x, e20.14, f20.13 )
@@ -361,6 +364,7 @@ c---------------------------------------------------------------------
 
 
 c      write(*,100)
+      call write_100
  100  format(' Benchmark completed ')
 
       epsilon = 1.d-10
@@ -373,6 +377,9 @@ c         err = abs( zeta - zeta_verify_value)
 c            write(*, 200)
 c            write(*, 201) zeta
 c            write(*, 202) err
+            call write_200
+            call write_201(zeta)
+            call write_202(err)
  200        format(' VERIFICATION SUCCESSFUL ')
  201        format(' Zeta is    ', E20.13)
  202        format(' Error is   ', E20.13)
@@ -381,6 +388,9 @@ c            write(*, 202) err
 c            write(*, 300) 
 c            write(*, 301) zeta
 c            write(*, 302) zeta_verify_value
+            call write_300
+            call write_301(zeta)
+            call write_302(zeta_verify_value)
  300        format(' VERIFICATION FAILED')
  301        format(' Zeta                ', E20.13)
  302        format(' The correct zeta is ', E20.13)
@@ -390,6 +400,9 @@ c            write(*, 302) zeta_verify_value
 c         write (*, 400)
 c         write (*, 401)
 c         write (*, 201) zeta
+         call write_400
+         call write_401
+         call write_201(zeta)
  400     format(' Problem size unknown')
  401     format(' NO VERIFICATION PERFORMED')
       endif
@@ -405,7 +418,7 @@ c         write (*, 201) zeta
       endif
 
 
-         call w_c_print_results('CG',class, na, 0, 0,
+         call w_c_print_results('CG', class, na, 0, 0,
      >                      niter, t,
      >                      verified)
 
@@ -809,7 +822,10 @@ c---------------------------------------------------------------------
       if (nza .gt. nz) then
 c         write(*,*) 'Space for matrix elements exceeded in sparse'
 c         write(*,*) 'nza, nzmax = ',nza, nz
+         call write_sparse_1
+         call write_sparse_2(nza, nz)
 c         stop
+         return
       endif
 
 
@@ -874,7 +890,9 @@ c---------------------------------------------------------------------
                   endif
                enddo
 c               print *,'internal error in sparse: i=',i
+               call write_sparse_3(i)
 c               stop
+               return
    40          continue
                a(k) = a(k) + va
             enddo

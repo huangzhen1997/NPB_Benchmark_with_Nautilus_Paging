@@ -56,15 +56,6 @@
          if (timers_enabled) call timer_stop(12)      
          if (timers_enabled) call timer_start(15)      
          call fftXYZ(1,xnt,y,exp1,exp2,exp3,nx,ny,nz)
-c         do i = 1, nz
-c             do k = 1, ny
-c                 do j = 1, nx
-c                     call write_debug_5(REALPART(y(j,k,i)),
-c     >                                  IMAGPART(y(j,k,i)))
-c                 enddo
-c             enddo
-c         enddo
-
          if (timers_enabled) call timer_stop(15)      
 
          do kt = 1, niter
@@ -90,7 +81,6 @@ c         enddo
          if (.not.timers_enabled) return
 
 c         print*,'FT subroutine timers '    
-         call write_appft_83()
 c         write(*,40) 'FT total                  ', timer_read(1)
 c         write(*,40) 'WarmUp time               ', timer_read(2)
 c         write(*,40) 'fftXYZ body               ', timer_read(3)
@@ -105,21 +95,6 @@ c         write(*,40) 'twiddle                   ', timer_read(13)
 c         write(*,40) 'verify                    ', timer_read(14)
 c         write(*,40) 'fftXYZ                    ', timer_read(15)
 c         write(*,40) 'Benchmark time            ', total_time
-
-         call write_40( 'FT total                  ', timer_read(1))
-         call write_40( 'WarmUp time               ', timer_read(2))
-         call write_40( 'fftXYZ body               ', timer_read(3))
-         call write_40( 'Swarztrauber              ', timer_read(4))
-         call write_40( 'X time                    ', timer_read(7))
-         call write_40( 'Y time                    ', timer_read(8))
-         call write_40( 'Z time                    ', timer_read(9))
-         call write_40( 'CalculateChecksum         ', timer_read(10))
-         call write_40( 'evolve                    ', timer_read(11))
-         call write_40( 'compute_initial_conditions', timer_read(12))
-         call write_40( 'twiddle                   ', timer_read(13))
-         call write_40( 'verify                    ', timer_read(14))
-         call write_40( 'fftXYZ                    ', timer_read(15))
-         call write_40( 'Benchmark time            ', total_time)
    40    format(' ',A26,' =',F9.4)
 
          return

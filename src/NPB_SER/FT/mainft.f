@@ -58,7 +58,6 @@ c---------------------------------------------------------------------
          double precision  mflops
          integer*8 total_time
          logical verified
-         external write_1000, write_1001, write_1002
 
 c         open (unit=2,file='timer.flag',status='old',iostat=fstatus)
 c         if (fstatus .eq. 0) then

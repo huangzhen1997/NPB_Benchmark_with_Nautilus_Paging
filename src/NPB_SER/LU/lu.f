@@ -64,7 +64,7 @@ c---------------------------------------------------------------------
 
       integer*8 tmax, timer_read, t,trecs(t_last)
       external timer_read
-      integer i, fstatus,j
+      integer i, fstatus
       character t_names(t_last)*8
 
 c---------------------------------------------------------------------
@@ -149,9 +149,6 @@ c---------------------------------------------------------------------
 c---------------------------------------------------------------------
 c   verification test
 c---------------------------------------------------------------------
-      do j = 1,5
-          call write_debug_002(rsdnm(j), errnm(j), frc)
-      enddo
       call verify ( rsdnm, errnm, frc, class, verified )
       mflops = float(itmax)*(1984.77*float( nx0 )
      >     *float( ny0 )
@@ -161,7 +158,7 @@ c---------------------------------------------------------------------
      >     -144010.)
      >     / (maxtime*1000000.)
 
-      call w_c_print_results(class, nx0,
+      call w_c_print_results('LU',class, nx0,
      >  ny0, nz0, itmax,
      >  maxtime, mflops,verified)
 

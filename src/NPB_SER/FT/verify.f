@@ -20,7 +20,6 @@
          double complex cexpd(25)
          real*8 epsilon, err
 
-         external write_120
 !
 ! Initialize tolerance level and success flag.
 !
@@ -180,7 +179,7 @@
          else
 !
 c            write (*,    120) 'not performed'
-            call write_120('not performed',13)
+            call write_120('not performed', 13)
             verified = .false.
 !
          end if
@@ -192,8 +191,6 @@ c            write (*,    120) 'not performed'
             do kt = 1, nt
               buf = (cksum(kt)-cexpd(kt))/cexpd(kt)
               err = sqrt(REALPART(buf)**2 + IMAGPART(buf)**2)
-              call write_debug_2(REALPART(buf)**2 + IMAGPART(buf)**2)
-              call write_debug_1(err,nt)
 c              err = abs((cksum(kt)-cexpd(kt))/cexpd(kt))
               if (.not.(err.le.epsilon)) then
                 verified = .false.
@@ -204,10 +201,10 @@ c              err = abs((cksum(kt)-cexpd(kt))/cexpd(kt))
 
             if (verified) then
 c               write (*,    120) 'successful'
-               call write_120('successful',10)
+               call write_120('successful', 10)
             else
 c               write (*,    120) 'failed'
-               call write_120('failed',6)
+               call write_120('failed', 6)
             end if
 
   120       format (' Verification test for FT ', a)

@@ -49,11 +49,6 @@ c---------------------------------------------------------------------
       double precision  tmp, tmp1
       double precision  tmat(5,5), tv(5)
 
-c---------------------------------------------------------------------
-c  debug
-c---------------------------------------------------------------------
-      double precision db1, db2, db3, db4, db5, db6, db7, db8, db9, db10
-
 
 
       do j = jst, jend
@@ -76,32 +71,17 @@ c---------------------------------------------------------------------
          do i = ist, iend
             do m = 1, 5
 
-c                  tv( m ) =  v( m, i, j, k )
-c     > - omega * ( ldy( m, 1, i, j ) * v( 1, i, j-1, k )
-c     >           + ldx( m, 1, i, j ) * v( 1, i-1, j, k )
-c     >           + ldy( m, 2, i, j ) * v( 2, i, j-1, k )
-c     >           + ldx( m, 2, i, j ) * v( 2, i-1, j, k )
-c     >           + ldy( m, 3, i, j ) * v( 3, i, j-1, k )
-c     >           + ldx( m, 3, i, j ) * v( 3, i-1, j, k )
-c     >           + ldy( m, 4, i, j ) * v( 4, i, j-1, k )
-c     >           + ldx( m, 4, i, j ) * v( 4, i-1, j, k )
-c     >           + ldy( m, 5, i, j ) * v( 5, i, j-1, k )
-c     >           + ldx( m, 5, i, j ) * v( 5, i-1, j, k ) )
-                   db1 = ldy( m, 1, i, j ) * v( 1, i, j-1, k )
-                   db2 = ldx( m, 1, i, j ) * v( 1, i-1, j, k )
-                   db3 = ldy( m, 2, i, j ) * v( 2, i, j-1, k )
-                   db4 = ldx( m, 2, i, j ) * v( 2, i-1, j, k )
-                   db5 = ldy( m, 3, i, j ) * v( 3, i, j-1, k )
-                   db6 = ldx( m, 3, i, j ) * v( 3, i-1, j, k )
-c                   if( j .eq. 2 .AND. i .eq. 2 .AND. m .eq. 1) then
-c                   call write_debug_location(j,i,m)
-c                   endif
-                   db7 = ldy( m, 4, i, j ) * v( 4, i, j-1, k )
-                   db8 = ldx( m, 4, i, j ) * v( 4, i-1, j, k )
-                   db9 = ldy( m, 5, i, j ) * v( 5, i, j-1, k )
-                   db10 = ldx( m, 5, i, j ) * v( 5, i-1, j, k )
-                   tv(m) = v(m,i,j,k) - omega * (
-     <                     db1+db2+db3+db4+db5+db6+db7+db8+db9+db10)
+                  tv( m ) =  v( m, i, j, k )
+     > - omega * ( ldy( m, 1, i, j ) * v( 1, i, j-1, k )
+     >           + ldx( m, 1, i, j ) * v( 1, i-1, j, k )
+     >           + ldy( m, 2, i, j ) * v( 2, i, j-1, k )
+     >           + ldx( m, 2, i, j ) * v( 2, i-1, j, k )
+     >           + ldy( m, 3, i, j ) * v( 3, i, j-1, k )
+     >           + ldx( m, 3, i, j ) * v( 3, i-1, j, k )
+     >           + ldy( m, 4, i, j ) * v( 4, i, j-1, k )
+     >           + ldx( m, 4, i, j ) * v( 4, i-1, j, k )
+     >           + ldy( m, 5, i, j ) * v( 5, i, j-1, k )
+     >           + ldx( m, 5, i, j ) * v( 5, i-1, j, k ) )
 
             end do
        
@@ -117,7 +97,6 @@ c---------------------------------------------------------------------
                tmat( m, 4 ) = d( m, 4, i, j )
                tmat( m, 5 ) = d( m, 5, i, j )
             end do
-c            call write_debug_001(j,i)
 
             tmp1 = 1.0d+00 / tmat( 1, 1 )
             tmp = tmp1 * tmat( 2, 1 )

@@ -14,7 +14,7 @@ c---------------------------------------------------------------------
       double complex x(xd1,n), exponent(n)      
 
       integer i,j,l
-      double complex u1,x11,x21,tmp1
+      double complex u1,x11,x21
       integer k, n1,li,lj,lk,ku,i11,i12,i21,i22
       
       if (timers_enabled) call timer_start(4)
@@ -40,8 +40,6 @@ c---------------------------------------------------------------------
             u1 = exponent(ku+i)
           else
             u1 = dconjg (exponent(ku+i))
-            tmp1 = exponent(ku+i)
-c            call write_debug_7(REALPART(tmp1), IMAGPART(tmp1))
           endif
           do k = 0, lk - 1
             do j = 1, vlen
@@ -75,8 +73,6 @@ c            call write_debug_7(REALPART(tmp1), IMAGPART(tmp1))
               u1 = exponent(ku+i)
             else
               u1 = dconjg (exponent(ku+i))
-              tmp1 = exponent(ku+i)
-c              call write_debug_7(REALPART(tmp1), IMAGPART(tmp1))
             endif
             do k = 0, lk - 1
               do j = 1, vlen

@@ -96,6 +96,8 @@ CC      >           rcond=1.0d-1 )
       common /urando/         	 amult, tran
       double precision           amult, tran
 
+      external         timer_read
+      integer*8        timer_read
 
       integer T_init, T_bench, T_conj_grad, T_last
       parameter (T_init=1, T_bench=2, T_conj_grad=3, T_last=3)
