@@ -7,7 +7,8 @@ include ../config/make.def
 
 OBJS = ua.o convect.o diffuse.o adapt.o move.o mason.o \
        precond.o utils.o transfer.o verify.o  setup.o\
-       ${COMMON}/print_results.o ${COMMON}/timers.o ${COMMON}/wtime.o
+       ${COMMON}/print_results.o ${COMMON}/timers.o ${COMMON}/wtime.o \
+	   ${COMMON}/rdtsc.o
 
 include ../sys/make.common
 

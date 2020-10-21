@@ -51,10 +51,11 @@ c---------------------------------------------------------------------
       
        integer          i, niter, step, fstatus, n3
        external         timer_read
-       double precision mflops, t, tmax, timer_read, trecs(t_last)
+       double precision mflops, t
        logical          verified
        character        class
        character        t_names(t_last)*8
+	   integer*8		timer_read,tmax, trecs(t_last)
 
 c---------------------------------------------------------------------
 c      Read input file (if it exists), else take
@@ -161,7 +162,7 @@ c---------------------------------------------------------------------
        
        call verify(niter, class, verified)
 
-       if( tmax .ne. 0. ) then
+       if( tmax .ne. 0 ) then
           n3 = grid_points(1)*grid_points(2)*grid_points(3)
           t = (grid_points(1)+grid_points(2)+grid_points(3))/3.0
           mflops = (881.174 * float( n3 )

@@ -62,7 +62,7 @@ c---------------------------------------------------------------------------c
       integer k, it
       
       external timer_read
-      double precision t, tinit, mflops, timer_read
+      double precision mflops
 
 c---------------------------------------------------------------------------c
 c These arrays are in common because they are quite large
@@ -80,7 +80,7 @@ c---------------------------------------------------------------------------c
 
       integer i, fstatus
       character t_names(t_last)*8
-      double precision tmax
+      integer*8 tmax, t, tinit, timer_read
 
 
       do i = T_init, T_last
@@ -229,8 +229,8 @@ c---------------------------------------------------------------------
       call timer_stop(T_init)
       tinit = timer_read(T_init)
 
-      write( *,'(A,F15.3,A/)' ) 
-     >     ' Initialization time: ',tinit, ' seconds'
+      write( *,'(A,i20,A/)' ) 
+     >     ' Initialization time: ',tinit, ' cycles'
 
       do i = T_bench, T_last
          call timer_clear(i)
@@ -319,7 +319,7 @@ c         err = abs( rnm2 - verify_value )
 
       nn = 1.0d0*nx(lt)*ny(lt)*nz(lt)
 
-      if( t .ne. 0. ) then
+      if( t .ne. 0 ) then
          mflops = 58.*nit*nn*1.0D-6 /t
       else
          mflops = 0.0

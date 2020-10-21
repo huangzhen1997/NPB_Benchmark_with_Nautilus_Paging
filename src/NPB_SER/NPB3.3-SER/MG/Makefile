@@ -5,7 +5,8 @@ BENCHMARKU=MG
 include ../config/make.def
 
 OBJS = mg.o ${COMMON}/print_results.o  \
-       ${COMMON}/${RAND}.o ${COMMON}/timers.o ${COMMON}/wtime.o
+       ${COMMON}/${RAND}.o ${COMMON}/timers.o ${COMMON}/wtime.o \
+	   ${COMMON}/rdtsc.o
 
 include ../sys/make.common
 

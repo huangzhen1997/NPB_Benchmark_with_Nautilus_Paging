@@ -46,12 +46,13 @@ c---------------------------------------------------------------------
 
       integer          step, ie,iside,i,j,k, fstatus
       external         timer_read
-      double precision timer_read, mflops, tmax, nelt_tot
+      double precision mflops, nelt_tot
       character        class
       logical          ifmortar, verified
 
-      double precision t2, trecs(t_last)
+      double precision t2
       character t_names(t_last)*10
+	  integer*8			timer_read, tmax, trecs(t_last)
 
 c---------------------------------------------------------------------
 c     Read input file (if it exists), else take
