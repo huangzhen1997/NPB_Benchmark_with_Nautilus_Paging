@@ -645,7 +645,7 @@ void rank( int iteration )
 /*************             M  A  I  N             ****************/
 /*****************************************************************/
 
-int npb_is_entry( int argc, char **argv )
+int npb_entry( int argc, char **argv )
 {
 
     int             i, iteration, timer_on;

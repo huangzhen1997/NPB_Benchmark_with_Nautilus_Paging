@@ -37,11 +37,11 @@ void write_100()
 
 void write_200(double* rnm2, double* err)
 {
-    printf(" VERIFICATION SUCCESSFUL\n L2 Norm is %20.13f \nError is %20.13f\n", *rnm2, *err);
+    printf(" VERIFICATION SUCCESSFUL\n L2 Norm is %20.13e \nError is %20.13e\n", *rnm2, *err);
 }
 void write_300(double* rnm2, double* verify_value)
 {
-    printf(" VERIFICATION FAILED \nL2 Norm is %20.13f \nThe correct L2 Norm is %20.13f\n",*rnm2, *verify_value);
+    printf(" VERIFICATION FAILED \nL2 Norm is %20.13e \nThe correct L2 Norm is %20.13e\n",*rnm2, *verify_value);
 }
 
 void write_400()

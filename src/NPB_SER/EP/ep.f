@@ -44,7 +44,7 @@ c         A. C. Woo
 c---------------------------------------------------------------------
 
 c---------------------------------------------------------------------
-      subroutine npb_entry
+      subroutine npb_entry_ep
 c---------------------------------------------------------------------
 C
 c   This is the serial version of the APP Benchmark 1,
@@ -61,14 +61,15 @@ c   not affect the results.
       include 'npbparams.h'
 
       double precision Mops, epsilon, a, s, t1, t2, t3, t4, x, x1, 
-     >                 x2, q, sx, sy, tm, an, tt, gc, dum(3)
+     >                 x2, q, sx, sy, an, gc, dum(3)
       double precision sx_verify_value, sy_verify_value, sx_err, sy_err
       integer          mk, mm, nn, nk, nq, np, 
      >                 i, ik, kk, l, k, nit,
      >                 k_offset, j, fstatus
       logical          verified, timers_enabled
       external         randlc, timer_read
-      double precision randlc, timer_read
+      double precision randlc
+      integer*8        timer_read, tm, tt
       double precision size
       external         w_log
       double precision w_log

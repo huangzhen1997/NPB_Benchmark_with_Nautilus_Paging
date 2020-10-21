@@ -32,7 +32,7 @@ void write_1004(int* nmxh)
 
 void write_1005(double* alpha)
 {
-    printf(" Heat source radius:   %f\n", *alpha);
+    printf(" Heat source radius:   %8.4f\n", *alpha);
 }
 
 void write_adapt_1000(int* step, int* irefine, int* icoarsen, int* nelt)
@@ -48,7 +48,7 @@ void write_verify_1990(char* class)
 
 void write_verify_2000(double* epsilon)
 {
-    printf(" accuracy setting for epsilon = %f\n", *epsilon);
+    printf(" accuracy setting for epsilon = %20.13e\n", *epsilon);
 }
 
 void write_verify_1995()
@@ -68,37 +68,37 @@ void write_verify_2005()
 
 void write_verify_2015(double* norm)
 {
-    printf("          %f", *norm);
+    printf("          %20.13e\n", *norm);
 }
 
 void write_verify_2011(double* norm, double* norm_ref, double* norm_dif)
 {
-    printf("          %f %f %f", *norm, *norm_ref, *norm_dif);
+    printf("          %20.13e %20.13e %20.13e\n", *norm, *norm_ref, *norm_dif);
 }
 
 void write_verify_2010(double* norm, double* norm_ref, double* norm_dif)
 {
-    printf(" FAILURE: %f %f %f", *norm, *norm_ref, *norm_dif);
+    printf(" FAILURE: %20.13e %20.13e %20.13e\n", *norm, *norm_ref, *norm_dif);
 }
 
 void write_verify_2022()
 {
-    printf(" No reference values provided");
+    printf(" No reference values provided\n");
 }
 
 void write_verify_2023()
 {
-    printf(" No verification performed");
+    printf(" No verification performed\n");
 }
 
 void write_verify_2020()
 {
-    printf(" Verification Successful");
+    printf(" Verification Successful\n");
 }
 
 void write_verify_2021()
 {
-    printf(" Verification failed");
+    printf(" Verification failed\n");
 }
 
 void write_debug(int* i, int* j, int* k, int* isize)

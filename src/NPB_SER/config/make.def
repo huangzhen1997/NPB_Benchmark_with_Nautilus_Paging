@@ -61,7 +61,7 @@ FFLAGS	= -fno-omit-frame-pointer \
 # Global *link time* flags. Flags for increasing maximum executable 
 # size usually go here. 
 #---------------------------------------------------------------------------
-FLINKFLAGS = -O2
+FLINKFLAGS = -z max-page-size=0x1000 -melf_x86_64 -shared 
 
 
 #---------------------------------------------------------------------------

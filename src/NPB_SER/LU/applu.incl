@@ -148,7 +148,7 @@ c---------------------------------------------------------------------
       parameter (t_l2norm = 11)
       parameter (t_last = 11)
       logical timeron
-      double precision maxtime
+      integer*8 maxtime
 
       common/timer/maxtime,timeron
 
