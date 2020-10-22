@@ -8,8 +8,8 @@ include ../sys/make.common
 
 OBJS = is.o \
        ${COMMON}/c_print_results.o \
-       ${COMMON}/c_timers.o \
-       ${COMMON}/rdtsc.o
+       ${COMMON}/c_timers.o 
+       
 
 
 #${PROGRAM}: config ${OBJS}

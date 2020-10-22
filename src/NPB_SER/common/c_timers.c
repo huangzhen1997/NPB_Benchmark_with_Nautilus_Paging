@@ -1,5 +1,12 @@
 /*  Prototype  */
-void rdtsc( unsigned long * );
+static inline unsigned long
+rdtsc (void)
+{
+    unsigned int lo, hi;
+    asm volatile("rdtsc" : "=a"(lo), "=d"(hi));
+    return lo | ((unsigned long)(hi) << 32);
+}
+
 
 
 /*****************************************************************/
@@ -9,7 +16,7 @@ unsigned long elapsed_time( void )
 {
     unsigned long t;
 
-    rdtsc( &t );
+	t = rdtsc();
     return( t );
 }
 

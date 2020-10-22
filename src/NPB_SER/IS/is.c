@@ -227,7 +227,7 @@ void c_print_results( char   *name,
                       int    n2,
                       int    n3,
                       int    niter,
-                      double t,
+                      uint64_t t,
                       double mops,
 		      char   *optype,
                       int    passed_verification,
@@ -244,7 +244,7 @@ void c_print_results( char   *name,
 void    timer_clear( int n );
 void    timer_start( int n );
 void    timer_stop( int n );
-double  timer_read( int n );
+unsigned long  timer_read( int n );
 
 
 /*
@@ -448,7 +448,6 @@ void rank( int iteration )
 
 /*  Determine where the partial verify test keys are, load into  */
 /*  top of array bucket_size                                     */
-//    for( i=0; i<TEST_ARRAY_SIZE; i++) printf("%d\n", test_index_array[i]);
     for( i=0; i<TEST_ARRAY_SIZE; i++ )
         partial_verify_vals[i] = key_array[test_index_array[i]];
 
@@ -512,7 +511,6 @@ void rank( int iteration )
 /* This is the partial verify test section */
 /* Observe that test_rank_array vals are   */
 /* shifted differently for different cases */
-//    for( i=0; i<TEST_ARRAY_SIZE; i++) printf("%d\n", partial_verify_vals[i]);
     for( i=0; i<TEST_ARRAY_SIZE; i++ )
     {                                             
         k = partial_verify_vals[i];          /* test vals were put here */
@@ -524,7 +522,6 @@ void rank( int iteration )
             switch( CLASS )
             {
                 case 'S':
-//                    printf("key_rank = %d\ntest_rank_array[%d]+%d=%d\n",key_rank,i,iteration,test_rank_array[i]+iteration);
                     if( i <= 2 )
                     {
                         if( key_rank != test_rank_array[i]+iteration )
@@ -645,28 +642,33 @@ void rank( int iteration )
 /*************             M  A  I  N             ****************/
 /*****************************************************************/
 
-int npb_entry( int argc, char **argv )
+int npb_entry(void)
 {
 
     int             i, iteration, timer_on;
 
-    unsigned long   timecounter;
+    unsigned long          timecounter;
+    double          tmp = 0.0;
 
     FILE            *fp;
 
 
 /*  Initialize timers  */
     timer_on = 0;            
-    if (0) {
+	/*
+    if ((fp = fopen("timer.flag", "r")) != NULL) {
+        fclose(fp);
         timer_on = 1;
     }
+	*/
     timer_clear( 0 );
+	/*
     if (timer_on) {
         timer_clear( 1 );
         timer_clear( 2 );
         timer_clear( 3 );
     }
-
+	*/
     if (timer_on) timer_start( 3 );
 
 
@@ -701,7 +703,7 @@ int npb_entry( int argc, char **argv )
         };
 
         
-//    for( i=0; i<TEST_ARRAY_SIZE; i++) printf("%d\n", S_test_index_array[i]);
+
 /*  Printout initial NPB info */
     printf
       ( "\n\n NAS Parallel Benchmarks (NPB3.3-SER) - IS Benchmark\n\n" );
@@ -761,8 +763,7 @@ int npb_entry( int argc, char **argv )
                      0,
                      MAX_ITERATIONS,
                      timecounter,
-                     ((double) (MAX_ITERATIONS*TOTAL_KEYS))
-                                                  /timecounter/1000000.,
+                     tmp,
                      "keys ranked", 
                      passed_verification,
                      NPBVERSION,
@@ -776,14 +777,14 @@ int npb_entry( int argc, char **argv )
 
 
 /*  Print additional timers  */
-/*
     if (timer_on) {
-       unsigned long t_total, t_percent;
+        /*
+       uint64_t t_total, t_percent;
 
        t_total = timer_read( 3 );
        printf("\nAdditional timers -\n");
        printf(" Total execution: %8.3f\n", t_total);
-       if (t_total == 0) t_total = 1.0;
+       if (t_total == 0.0) t_total = 1.0;
        timecounter = timer_read(1);
        t_percent = timecounter/t_total * 100.;
        printf(" Initialization : %8.3f (%5.2f%%)\n", timecounter, t_percent);
@@ -793,8 +794,9 @@ int npb_entry( int argc, char **argv )
        timecounter = timer_read(2);
        t_percent = timecounter/t_total * 100.;
        printf(" Sorting        : %8.3f (%5.2f%%)\n", timecounter, t_percent);
+       */
     }
-*/
+
 
     return 0;
          /**************************/
