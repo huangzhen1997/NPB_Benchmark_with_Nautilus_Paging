@@ -1,0 +1,9 @@
+This is Serial version NPB benchmark for testing our Paging implementation for Nautilus. 
+
+Step1: specify your nautilus path under the src/NPB_SER/config/make.def
+
+Step2: make the benchmark, etc. "make IS CLASS=S"
+
+Step3: Turn on the NAUT_CONFIG_RUN_TESTS_AT_BOOT macro at /src/arch/x64/init.c
+
+Step4: Compile and run Nautilus

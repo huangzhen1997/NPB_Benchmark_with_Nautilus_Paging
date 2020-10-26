@@ -99,7 +99,7 @@ C_LIB  =
 #---------------------------------------------------------------------------
 # These macros are passed to the compiler 
 #---------------------------------------------------------------------------
-NAUT_PATH = /home/cq/nautilus
+NAUT_PATH = /home/zhn1979/KARAT/npb_paging
 C_INC = -I$(NAUT_PATH)/include -include $(NAUT_PATH)/include/autoconf.h
 
 #---------------------------------------------------------------------------

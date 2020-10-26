@@ -21,7 +21,7 @@
  * redistribute, and modify it as specified in the file "LICENSE.txt".
  */
 #define __NAUTILUS_MAIN__
-
+#define NAUT_CONFIG_RUN_TESTS_AT_BOOT 1
 #include <nautilus/nautilus.h>
 #include <nautilus/paging.h>
 #include <nautilus/idt.h>
